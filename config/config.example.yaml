@@ -1,0 +1,110 @@
+# Dashboard Migration Configuration File
+# This file contains all configuration options for the dashboard migration script.
+# Command-line arguments override values in this file.
+
+# ============================================================================
+# Databricks Connection
+# ============================================================================
+# Option 1: Single workspace (backward compatible)
+# host: "https://your-workspace.cloud.databricks.com"
+# token: "dapi################"  # Or set DATABRICKS_TOKEN env var
+# workspace-name: "default"  # Optional workspace name
+
+# Option 2: Multiple workspaces (recommended for multi-workspace processing)
+workspaces:
+  - name: "production"
+    host: "https://prod-workspace.cloud.databricks.com"
+    token: "dapi_production_token_here"
+  
+  - name: "staging"
+    host: "https://staging-workspace.cloud.databricks.com"
+    token: "dapi_staging_token_here"
+  
+  - name: "development"
+    host: "https://dev-workspace.cloud.databricks.com"
+    token: "dapi_dev_token_here"
+
+# ============================================================================
+# Migration Options
+# ============================================================================
+# Delete legacy dashboards after successful migration
+delete-legacy: false
+
+# Publish all migrated AI/BI dashboards
+publish: false
+
+# Optional warehouse ID to use when publishing dashboards
+warehouse-id: null
+
+# Note: With dry-run: true, the script will only collect dashboard information
+# and write it to the CSV file without making any actual changes.
+
+# ============================================================================
+# Dashboard Selection
+# ============================================================================
+# Comma-separated list of specific dashboard IDs to migrate
+dashboard-ids: null
+# Example: "123,456,789"
+
+# Path to CSV file containing dashboard information
+dashboard-csv: null
+# Example: "data/selected_dashboards.csv"
+
+# Filter dashboards by path pattern (regex)
+filter-path: null
+# Example: "/Users/team.*"
+
+# Filter dashboards by owner pattern (regex)
+filter-owner: null
+# Example: "admin@company.com"
+
+# Filter dashboards by name pattern (regex)
+filter-name: null
+# Example: ".*production.*"
+
+# ============================================================================
+# Execution Options
+# ============================================================================
+# Simulate migration without making API calls (set to true to only collect info)
+dry-run: true
+
+# Resume from existing log file, skipping already-migrated dashboards
+resume: false
+
+# Path to the CSV log file to write
+log-file: "data/dashboard_migration_log.csv"
+
+# Logging level: DEBUG, INFO, WARNING, ERROR
+log-level: "INFO"
+
+# ============================================================================
+# Retry and Rate Limiting
+# ============================================================================
+# Seconds to sleep between API calls
+sleep-between-calls: 0.2
+
+# Maximum retry attempts for failed API calls
+max-retries: 3
+
+# Initial delay between retries in seconds
+retry-delay: 1.0
+
+# ============================================================================
+# Email Notifications
+# ============================================================================
+# Send email summary after migration completes
+send-email: false
+
+# Comma-separated list of email recipients
+email-to: null
+# Example: "team@company.com,admin@company.com"
+
+# Sender email address (or set EMAIL_FROM env var)
+email-from: null
+# Example: "migrations@company.com"
+
+# SMTP Configuration
+smtp-server: "smtp.gmail.com"
+smtp-port: 587
+smtp-username: null  # Or set SMTP_USERNAME env var
+smtp-password: null  # Or set SMTP_PASSWORD env var
